@@ -1,6 +1,6 @@
 # Hobbit
 
-> One Ring to rule them all, One Ring to find them, One Ring to bring them all, and in the darkness bind them
+> One Ring to rule them all
 
 Hobbit is a premium, beautifully designed developer utility suite. It transforms complex strings, serialized JSON, timestamps, and base-encoded data into readable, structured, and interactive formats.
 

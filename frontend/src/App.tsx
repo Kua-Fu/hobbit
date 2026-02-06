@@ -44,8 +44,57 @@ const App: React.FC = () => {
         setError(null);
     };
 
+    const [rings, setRings] = useState<{ id: number; x: number; y: number; tx: number; ty: number }[]>([]);
+
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) => {
+            // Check if click is on input/output areas
+            const target = e.target as HTMLElement;
+            if (
+                target.tagName === 'TEXTAREA' ||
+                target.tagName === 'INPUT' ||
+                target.tagName === 'SELECT' ||
+                target.tagName === 'BUTTON' ||
+                target.closest('.panel-content') ||
+                target.closest('.actions') ||
+                target.closest('.tabs')
+            ) {
+                return;
+            }
+
+            const id = Date.now();
+            // Random target coordinates outside the viewport
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.max(window.innerWidth, window.innerHeight);
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+
+            setRings(prev => [...prev, { id, x: e.clientX, y: e.clientY, tx, ty }]);
+
+            // Cleanup after animation
+            setTimeout(() => {
+                setRings(prev => prev.filter(r => r.id !== id));
+            }, 10000);
+        };
+
+        window.addEventListener('click', handleClick);
+        return () => window.removeEventListener('click', handleClick);
+    }, []);
+
     return (
         <div className="container">
+            {rings.map(ring => (
+                <div
+                    key={ring.id}
+                    className="one-ring"
+                    style={{
+                        left: ring.x,
+                        top: ring.y,
+                        '--tx': `${ring.tx}px`,
+                        '--ty': `${ring.ty}px`
+                    } as React.CSSProperties}
+                />
+            ))}
             <header>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', gap: '1rem' }}>
                     <img
@@ -59,7 +108,7 @@ const App: React.FC = () => {
                     />
                     <h1 style={{ margin: 0 }}>Hobbit</h1>
                 </div>
-                <p className="subtitle">One Ring to rule them all, One Ring to find them, One Ring to bring them all, and in the darkness bind them</p>
+                <p className="subtitle fire-text">One Ring to rule them all</p>
 
                 <div className="tabs" style={{ marginTop: '1.5rem' }}>
                     <div

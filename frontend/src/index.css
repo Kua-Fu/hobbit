@@ -427,3 +427,69 @@ button.secondary:hover {
     color: #94a3b8;
     font-style: italic;
 }
+
+/* Magical One Ring Animation */
+.one-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #fcd34d 0%, #d97706 70%, #92400e 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: roll-away 10s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    border: 4px solid #b45309;
+}
+
+.one-ring::after {
+    content: "💍";
+    font-size: 2rem;
+    filter: drop-shadow(0 0 3px #f59e0b);
+}
+
+@keyframes roll-away {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(1440deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Redesigned Fire Text - Premium & Sharp */
+.fire-text {
+    color: #ffd700;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: linear-gradient(0deg, #b45309 0%, #d97706 30%, #fcd34d 60%, #fff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+    animation: ember-glow 2s infinite alternate ease-in-out;
+    display: inline-block;
+    padding: 2px 0;
+}
+
+@keyframes ember-glow {
+    0% {
+        filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4)) drop-shadow(0 0 10px rgba(180, 83, 9, 0.3));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.7)) drop-shadow(0 0 20px rgba(180, 83, 9, 0.6));
+    }
+}
